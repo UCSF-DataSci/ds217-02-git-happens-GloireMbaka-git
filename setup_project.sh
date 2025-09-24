@@ -33,5 +33,7 @@ if __name__ == "__main__":
 
 EOF
 
-# make scirpt executable
-chmod +x setup_project.sh
+# make scirpt executable (to be run directly in the terminal)
+echo "Setup Complete!"
+#PART 3
+
