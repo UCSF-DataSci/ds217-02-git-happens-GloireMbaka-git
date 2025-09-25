@@ -35,5 +35,49 @@ EOF
 
 # make scirpt executable (to be run directly in the terminal)
 echo "Setup Complete!"
+
 #PART 3
+
+cat > src/data_analysis.py << 'EOF'
+
+# load and analyze student data
+import csv
+def load_student_data(csv_file):
+    """Load student data from CSV file and return list of students data."""
+    students = []
+    try:
+        with open(csv_file, 'r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                students.append({
+                    'name': row['name'],
+                    'age': int(row['age']),
+                    'grade': int(row['grade']),
+                    'subject': row['subject']
+                })
+    except FileNotFoundError:
+        print(f"Error: File {csv_file} not found")
+    except Exception as e:
+        print(f"Error loading data: {e}")
+
+    return students
+
+def calculate_average_grade(students):
+    """Calculate the average of a list of grades and return average."""
+    if not grades:
+        return 0
+    return sum(grades) / len(grades)
+
+def count_math_students(students):
+    """Count number of students per subject and return a dictionary with subject counts."""
+    subject_count = {}
+    for student in students:
+        subject = student['subject']
+        if subject in subject_count:
+            subject_count[subject] += 1
+        else:
+            subject_count[subject] = 1
+    return subject_count
+
+    
 
