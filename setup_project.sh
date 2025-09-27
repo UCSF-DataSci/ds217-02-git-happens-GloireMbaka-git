@@ -8,42 +8,38 @@ touch README.md .gitignore, requirements.txt
 
 # create sample data files with 8 records
  cat > data/students.csv << 'EOF'
-name,age,grade,subject
-Alice,20,85,Math
-Bob,19,92,Science
-Charlie,21,78,English
-Diana,20,88,Math
-Eve,22,95,Science
-Frank,19,82,History
-Grace,21,91,Math
-Henry,20,76,Science
-EOF
+ name,age,grade,subject
+ Alice,20,85,Math
+ Bob,19,92,Science
+ Charlie,21,78,English
+ Diana,20,88,Math
+ Eve,22,95,Science
+ Frank,19,82,History
+ Grace,21,91,Math
+ Henry,20,76,Science
+ EOF
 
-# Create python files 
-cat > src/student_analysis.py << 'EOF'
+ # Create python files 
+ cat > src/student_analysis.py << 'EOF'
 
-# Analysis function
+ # Analysis function
 
-def main():
-    # TODO: Implement main logic
-    print("running basic descprtive statistics")
+ def main():
+     # TODO: Implement main logic
+         print("running basic descprtive statistics")
 
-if __name__ == "__main__":
-    main()
+ if __name__ == "__main__":
+     main()
+ EOF
+  # make scirpt executable (to be run directly in the terminal)
+ echo "Setup Complete!"
 
-EOF
-
-# make scirpt executable (to be run directly in the terminal)
-echo "Setup Complete!"
-
-#PART 3
-#!/bin/bash
-# Basic analysis script
+#PART 3: Basic analysis script
 cat > src/data_analysis.py << 'EOF'
-
 # load and analyze student data
 import csv
 from pathlib import Path
+
 def load_student_data(csv_file):
     """Load student data from CSV file and return list of students data."""
     students = []
@@ -71,43 +67,41 @@ def calculate_average_grade(grades):
     return sum(grades) / len(grades)
 
 def count_math_students(students):
-    """Count number of students in Math and return a dictionary with student in Math."""
-    count_Math = 0
+    """Count number of students in Math and return count of students in Math."""
+    count_math = 0
     for student in students:
         if student['subject'].lower() == 'Math':
-            count_Math += 1
-    return Count_Math
+            count_math += 1
+    return count_math
 
-    # generatre report
 def generate_report(students):
     """Generate a report of average grade and subject counts."""
     if not students:
         print("No student data available to generate report.")
-        return
+        return None, 0
+    
     # Calculate average grade and subject counts
-
     grades = [student['grade'] for student in students]
     average_grade = calculate_average_grade(grades)
-    Math_count = count_math_students(students)
+    math_count = count_math_students(students)
     print(f"Average Grade: {average_grade:.2f}")
-    print(f"Math Students:{Math_count}")
-        return average_grade, Math_count
+    print(f"Math Students: {math_count}")
+    return average_grade, math_count
 
-    # Save basic results 
-    def save_results_to_file(filename, students, average, Math_count):
+def save_results_to_file(filename, students, average, math_count):
     """Save analysis results to a file."""
     try:
         with open(filename, 'w') as file:
-            file.write("Student Grade Analysis\\n")
-            file.write("=" * 30 + "\\n\\n")
+            file.write("Student Grade Analysis\n")
+            file.write("=" * 30 + "\n\n")
 
-            file.write("Individual Grades:\\n")
+            file.write("Individual Grades:\n")
             for student in students:
-                file.write(f"{student['name']}: {student['grade']}\\n")
+                file.write(f"{student['name']}: {student['grade']}\n")
 
-            file.write(f"\\nSummary:\\n")
-            file.write(f"Average grade: {average:.1f}\\n")
-            file.write(f"Math Students: {len(Math_count)}\\n")
+            file.write(f"\nSummary:\n")
+            file.write(f"Average grade: {average:.1f}\n")
+            file.write(f"Math Students: {math_count}\n")
 
         print(f"Results saved to {filename}")
         return True
@@ -117,7 +111,7 @@ def generate_report(students):
 
 def main():
     """Main function to run the analysis."""
-    print("Student Grade Analysis ")
+    print("Student Grade Analysis")
     print("=" * 40)
 
     # Load data from CSV
@@ -127,13 +121,14 @@ def main():
         print("No student data to analyze")
         return
 
-    # Calculate statistics
-    grades = [student['grade'] for student in students]
-    average = calculate_average_grade(grades)
-    Math_count = count_math_students(students)
+    # Generate report and get statistics
+    average, math_count = generate_report(students)
+    
+    if average is None:
+        return
 
     # Display results
-    print(f"Analyzed {len(students)} students")
+    print(f"\nAnalyzed {len(students)} students")
     print(f"Average grade: {average:.1f}")
     print(f"Math students: {math_count}")
 
@@ -141,12 +136,11 @@ def main():
     output_file = 'output/basic_analysis.txt'
     Path('output').mkdir(exist_ok=True)
 
-    save_results_to_file(output_file, students, average,Math_count)
+    save_results_to_file(output_file, students, average, math_count)
 
 if __name__ == "__main__":
     main()
 EOF
-
 
 #PART 4: Advanced analysis script
 
