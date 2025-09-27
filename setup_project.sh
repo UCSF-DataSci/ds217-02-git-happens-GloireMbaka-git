@@ -37,11 +37,13 @@ EOF
 echo "Setup Complete!"
 
 #PART 3
-
+#!/bin/bash
+# Basic analysis script
 cat > src/data_analysis.py << 'EOF'
 
 # load and analyze student data
 import csv
+from pathlib import Path
 def load_student_data(csv_file):
     """Load student data from CSV file and return list of students data."""
     students = []
@@ -62,22 +64,19 @@ def load_student_data(csv_file):
 
     return students
 
-def calculate_average_grade(students):
+def calculate_average_grade(grades):
     """Calculate the average of a list of grades and return average."""
     if not grades:
         return 0
     return sum(grades) / len(grades)
 
 def count_math_students(students):
-    """Count number of students per subject and return a dictionary with subject counts."""
-    subject_count = {}
+    """Count number of students in Math and return a dictionary with student in Math."""
+    count_Math = 0
     for student in students:
-        subject = student['subject']
-        if subject in subject_count:
-            subject_count[subject] += 1
-        else:
-            subject_count[subject] = 1
-    return subject_count
+        if student['subject'].lower() == 'Math':
+            count_Math += 1
+    return Count_Math
 
     # generatre report
 def generate_report(students):
@@ -85,33 +84,73 @@ def generate_report(students):
     if not students:
         print("No student data available to generate report.")
         return
+    # Calculate average grade and subject counts
+
     grades = [student['grade'] for student in students]
     average_grade = calculate_average_grade(grades)
-    subject_count = count_math_students(students)
+    Math_count = count_math_students(students)
     print(f"Average Grade: {average_grade:.2f}")
-    print("Subject Counts:")
-    for subject, count in subject_count.items():
-        print(f"  {subject}: {count}")
-        return average_grade, subject_count
+    print(f"Math Students:{Math_count}")
+        return average_grade, Math_count
 
-    # Generate comprehensive report
-    generate_report(students, 'output/basic_analysis.txt')
+    # Save basic results 
+    def save_results_to_file(filename, students, average, Math_count):
+    """Save analysis results to a file."""
+    try:
+        with open(filename, 'w') as file:
+            file.write("Student Grade Analysis\\n")
+            file.write("=" * 30 + "\\n\\n")
 
-    # Save basic results using imported function
-    save_results_to_file('output/basic_analysis.txt', students, average, counts)
+            file.write("Individual Grades:\\n")
+            for student in students:
+                file.write(f"{student['name']}: {student['grade']}\\n")
 
-    print("\\n✅ basic analysis complete!")
+            file.write(f"\\nSummary:\\n")
+            file.write(f"Average grade: {average:.1f}\\n")
+            file.write(f"Math Students: {len(Math_count)}\\n")
+
+        print(f"Results saved to {filename}")
+        return True
+    except Exception as e:
+        print(f"Error saving file: {e}")
+        return False
+
+def main():
+    """Main function to run the analysis."""
+    print("Student Grade Analysis ")
+    print("=" * 40)
+
+    # Load data from CSV
+    students = load_student_data('data/students.csv')
+
+    if not students:
+        print("No student data to analyze")
+        return
+
+    # Calculate statistics
+    grades = [student['grade'] for student in students]
+    average = calculate_average_grade(grades)
+    Math_count = count_math_students(students)
+
+    # Display results
+    print(f"Analyzed {len(students)} students")
+    print(f"Average grade: {average:.1f}")
+    print(f"Math students: {math_count}")
+
+    # Save results
+    output_file = 'output/basic_analysis.txt'
+    Path('output').mkdir(exist_ok=True)
+
+    save_results_to_file(output_file, students, average,Math_count)
 
 if __name__ == "__main__":
     main()
-
 EOF
-#!/bin/bash
+
+
 #PART 4: Advanced analysis script
 
 cat > src/data_analysis_function.py << 'EOF'
-
-
 def load_csv(csv_file):
     """Load student data from CSV file and return list of students data."""
     students = []
@@ -282,7 +321,7 @@ def main():
         print(f"{grade_range}: {count} students ({percentage:.1f}%)")
 
     # Generate comprehensive report
-    generate_detailed_report(students, 'output/advanced_analysis.txt')
+    generate_detailed_report(students, 'output/analysis_report.txt')
 
     # Save basic results using imported function
     save_results_to_file('output/module_analysis.txt', students, average, highest)
@@ -292,3 +331,4 @@ def main():
 if __name__ == "__main__":
     main()
 EOF
+
