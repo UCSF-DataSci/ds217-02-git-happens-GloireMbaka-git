@@ -1,0 +1,60 @@
+COMPREHENSIVE STUDENT ANALYSIS REPORT
+==================================================
+
+Report generated on: 2025-09-27 18:47:10\n\nBASIC STATISTICS
+--------------------
+Total students: 8
+Highest grade: 95
+Lowest grade: 76
+Grade range: 19
+
+GRADE DISTRIBUTION
+--------------------
+A (90-100): 3 students (37.5%)
+B (80-89): 3 students (37.5%)
+C (70-79): 2 students (25.0%)
+D (60-69): 0 students (0.0%)
+F (0-59): 0 students (0.0%)
+
+INDIVIDUAL STUDENT RECORDS
+------------------------------
+Name: Alice
+  Age: 20
+  Grade: 85
+  Subject: Math
+
+Name: Bob
+  Age: 19
+  Grade: 92
+  Subject: Science
+
+Name: Charlie
+  Age: 21
+  Grade: 78
+  Subject: English
+
+Name: Diana
+  Age: 20
+  Grade: 88
+  Subject: Math
+
+Name: Eve
+  Age: 22
+  Grade: 95
+  Subject: Science
+
+Name: Frank
+  Age: 19
+  Grade: 82
+  Subject: History
+
+Name: Grace
+  Age: 21
+  Grade: 91
+  Subject: Math
+
+Name: Henry
+  Age: 20
+  Grade: 76
+  Subject: Science
+
