@@ -1,0 +1,16 @@
+Student Grade Analysis
+==============================
+
+Individual Grades:
+Alice: 85
+Bob: 92
+Charlie: 78
+Diana: 88
+Eve: 95
+Frank: 82
+Grace: 91
+Henry: 76
+
+Summary:
+Average grade: 85.9
+Math Students: 3
