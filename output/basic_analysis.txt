@@ -13,4 +13,4 @@ Henry: 76
 
 Summary:
 Average grade: 85.9
-Math Students: 3
+Math Students: 0
