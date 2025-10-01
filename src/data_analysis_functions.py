@@ -1,159 +1,3 @@
-#!/bin/bash
-echo
-#create directory structure
-mkdir -p src/data/output
-
-# generate initial files
-touch README.md .gitignore, requirements.txt
-
-# create sample data files with 8 records
-cat > data/students.csv <<EOF
-name,age,grade,subject
-Alice,20,85,Math
-Bob,19,92,Science
-Charlie,21,78,English
-Diana,20,88,Math
-Eve,22,95,Science
-Frank,19,82,History
-Grace,21,91,Math
-Henry,20,76,Science
-EOF
-
-#Create python files 
-cat > src/student_analysis.py <<EOF
-
-# Analysis function
-
-def main():
-    # TODO: Implement main logic
-        print("running basic descprtive statistics")
-
-if __name__ == "__main__":
-    main()
-EOF
-# make scirpt executable (to be run directly in the terminal)
-echo "Setup Complete!"
-
-# set up python templates files
-#creating data analysis function for the basic analysis
-#PART 3: Basic analysis script
-cat > src/data_analysis.py <<EOF
-# load and analyze student data
-#TODO: Implement CSV loading, average grade calculation, Math student counting, report generation, and report saving
-import csv
-from pathlib import Path
-
-def load_student_data(csv_file):
-    """Load student data from CSV file and return list of students data."""
-    students = []
-    try:
-        with open(csv_file, 'r') as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                students.append({
-                    'name': row['name'],
-                    'age': int(row['age']),
-                    'grade': int(row['grade']),
-                    'subject': row['subject']
-                })
-    except FileNotFoundError:
-        print(f"Error: File {csv_file} not found")
-    except Exception as e:
-        print(f"Error loading data: {e}")
-
-    return students
-
-def calculate_average_grade(grades):
-    """Calculate the average of a list of grades and return average."""
-    #TODO: Implement average grade calculation
-    if not grades:
-        return 0
-    return sum(grades) / len(grades)
-
-def count_math_students(students):
-    """Count number of students in Math and return count of students in Math."""
-    #TODO: Implement Math student counting
-    count_math = 0
-    for student in students:
-        if student['subject'].lower() == 'Math':
-            count_math += 1
-    return count_math
-
-def generate_report(students):
-    """Generate a report of average grade and subject counts."""
-    #TODO: Implement report generation
-    if not students:
-        print("No student data available to generate report.")
-        return None, 0
-    
-    # Calculate average grade and subject counts
-    grades = [student['grade'] for student in students]
-    average_grade = calculate_average_grade(grades)
-    math_count = count_math_students(students)
-    print(f"Average Grade: {average_grade:.2f}")
-    print(f"Math Students: {math_count}")
-    return average_grade, math_count
-
-def save_results_to_file(filename, students, average, math_count):
-    """Save analysis results to a file."""
-    #TODO: Implement report saving
-    try:
-        with open(filename, 'w') as file:
-            file.write("Student Grade Analysis\n")
-            file.write("=" * 30 + "\n\n")
-
-            file.write("Individual Grades:\n")
-            for student in students:
-                file.write(f"{student['name']}: {student['grade']}\n")
-
-            file.write(f"\nSummary:\n")
-            file.write(f"Average grade: {average:.1f}\n")
-            file.write(f"Math Students: {math_count}\n")
-
-        print(f"Results saved to {filename}")
-        return True
-    except Exception as e:
-        print(f"Error saving file: {e}")
-        return False
-
-def main():
-    """Main function to run the analysis."""
-    #TODO: Implement main workflow
-    print("Student Grade Analysis")
-    print("=" * 40)
-
-    # Load data from CSV
-    students = load_student_data('data/students.csv')
-
-    if not students:
-        print("No student data to analyze")
-        return
-
-    # Generate report and get statistics
-    average, math_count = generate_report(students)
-    
-    if average is None:
-        return
-
-    # Display results
-    print(f"\nAnalyzed {len(students)} students")
-    print(f"Average grade: {average:.1f}")
-    print(f"Math students: {math_count}")
-
-    # Save results
-    output_file = 'output/basic_analysis.txt'
-    Path('output').mkdir(exist_ok=True)
-
-    save_results_to_file(output_file, students, average, math_count)
-
-if __name__ == "__main__":
-    main()
-EOF
-echo "created src/data_analysis.py with function tubs."
-
-#PART 3B: Advanced analysis script
-#creating the data_analysis_functions.py file 
-cat > src/data_analysis_functions.py <<EOF
 """Advanced Student Data Analysis Script"""
 #TODO: Implement CSV loading, average grade calculation
 #TODO: Math student counting, find highest, lowest grades
@@ -270,7 +114,7 @@ def generate_detailed_report(students, filename):
             file.write("COMPREHENSIVE STUDENT ANALYSIS REPORT\n")
             file.write("=" * 50 + "\n\n")
 
-            file.write(f"Report generated on: {__import__('datetime').datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\\n\\n")
+            file.write(f"Report generated on: {__import__('datetime').datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
 
             file.write("BASIC STATISTICS\n")
             file.write("-" * 20 + "\n")
@@ -330,7 +174,7 @@ def main():
 
  # Advanced analysis using new functions
     distribution = analyze_grade_distribution(grades)
-    print("\\nGrade Distribution:")
+    print("\nGrade Distribution:")
     for grade_range, count in distribution.items():
         percentage = (count / len(students)) * 100
         print(f"{grade_range}: {count} students ({percentage:.1f}%)")
@@ -341,10 +185,7 @@ def main():
     # Save basic results using imported function
     # save_results_to_file('output/module_analysis.txt', students, average, highest)
 
-    print("\\n✅ Advanced analysis complete!")
+    print("\n✅ Advanced analysis complete!")
 
 if __name__ == "__main__":
     main()
-EOF
-echo "created src/data_analysis_functions.py with advanced analysis functions."
-

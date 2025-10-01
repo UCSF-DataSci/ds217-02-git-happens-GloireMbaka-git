@@ -1,4 +1,5 @@
 # load and analyze student data
+#TODO: Implement CSV loading, average grade calculation, Math student counting, report generation, and report saving
 import csv
 from pathlib import Path
 
@@ -24,20 +25,23 @@ def load_student_data(csv_file):
 
 def calculate_average_grade(grades):
     """Calculate the average of a list of grades and return average."""
+    #TODO: Implement average grade calculation
     if not grades:
         return 0
     return sum(grades) / len(grades)
 
 def count_math_students(students):
     """Count number of students in Math and return count of students in Math."""
+    #TODO: Implement Math student counting
     count_math = 0
     for student in students:
-        if student['subject'].lower() == 'math':
+        if student['subject'].lower() == 'Math':
             count_math += 1
     return count_math
 
 def generate_report(students):
     """Generate a report of average grade and subject counts."""
+    #TODO: Implement report generation
     if not students:
         print("No student data available to generate report.")
         return None, 0
@@ -52,6 +56,7 @@ def generate_report(students):
 
 def save_results_to_file(filename, students, average, math_count):
     """Save analysis results to a file."""
+    #TODO: Implement report saving
     try:
         with open(filename, 'w') as file:
             file.write("Student Grade Analysis\n")
@@ -73,6 +78,7 @@ def save_results_to_file(filename, students, average, math_count):
 
 def main():
     """Main function to run the analysis."""
+    #TODO: Implement main workflow
     print("Student Grade Analysis")
     print("=" * 40)
 
