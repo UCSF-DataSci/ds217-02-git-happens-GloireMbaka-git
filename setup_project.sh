@@ -19,6 +19,9 @@ Grace,21,91,Math
 Henry,20,76,Science
 EOF
 
+#Create branch 
+git checkout -b feature/project-scaffold
+
 #Create python files 
 cat > src/student_analysis.py <<EOF
 
@@ -33,6 +36,16 @@ if __name__ == "__main__":
 EOF
 # make scirpt executable (to be run directly in the terminal)
 echo "Setup Complete!"
+
+#commit changes to feature branch
+git add . setup_project.sh
+git commit -m "Add project setup automatiion script"
+
+#Merge feature branch to main
+git checkout main
+git merge feature/project-scaffold
+echo "Merged feature/project-scaffold into main"
+
 
 # set up python templates files
 #creating data analysis function for the basic analysis
@@ -152,6 +165,11 @@ EOF
 echo "created src/data_analysis.py with function tubs."
 
 #PART 3B: Advanced analysis script
+
+#creating data processing branch
+git checkout -b feature/data-processing
+
+
 #creating the data_analysis_functions.py file 
 cat > src/data_analysis_functions.py <<EOF
 """Advanced Student Data Analysis Script"""
@@ -348,3 +366,12 @@ if __name__ == "__main__":
 EOF
 echo "created src/data_analysis_functions.py with advanced analysis functions."
 
+
+#commit changes to feature branch
+git add . setup_project.sh
+git commit -m "Add advanced automatiion script"
+
+#Merge feature branch to main
+git checkout main
+git merge feature/data-processing
+echo "Merged feature/data-processing into main"
